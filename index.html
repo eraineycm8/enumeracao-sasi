@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enumeração - BACKTRACK LINUX</title>
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      scroll-snap-type: y mandatory; /* Scroll snap para o eixo Y (vertical) */
+      overflow-y: scroll; /* Habilita a rolagem vertical */
+      scroll-behavior: smooth; /* Faz a rolagem ser suave */
+    }
+
+    section {
+      height: 100vh; /* Cada seção ocupa a altura total da janela */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      scroll-snap-align: start; /* Encaixa a seção no início da rolagem */
+    }
+
+    .container {
+      text-align: center;
+    }
+  </style>
+   <style>
+    .profile-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+    }
+    .profile {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 1rem;
+      width: 45%; /* Ajusta o tamanho das divs dos perfis */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .profile img {
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+    }
+    .profile a {
+      color: #1d4ed8; /* Cor azul para links */
+      text-decoration: none;
+    }
+    .profile a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+
+    <!-- CAPA -->
+    <section class="has-background-primary p-5" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100vh;">
+        <div class="container is-fullhd" style="position: relative; height: 100%; padding-top: 10vh; padding-bottom: 0;">
+    
+        <!-- Título com a maior fonte possível, mais acima -->
+        <h1 class="title has-text-black-ter" style="font-size: 6rem; text-align: center; margin-bottom: 2rem;">
+            Enumeração
+        </h1>
+    
+        <!-- Lista de itens, começando no meio da página -->
+        <div style="margin-top: 20vh;">
+            <ol class="has-text-grey-dark has-text-left" style="font-size: 1.5rem; margin-top: 2rem;">
+                <li>Princípios de Enumeração</li>
+                <li>Enumeração Netbios com Nbtscan</li>
+                <li>Enumeração SNMP com Snmpcheck</li>
+                <li>Detecção de Versões</li>
+                <li>Detectando Servidores Web com Httprint</li>
+                <li>A Ferramenta AMAP</li>
+                <li>Enumerando SMTP</li>
+                <li>A Ferramenta SMTPScan</li>
+            </ol>
+        </div>
+    
+        <!-- Citação no canto inferior direito -->
+        <p class="has-text-primary-invert" style="position: absolute; bottom: 20px; right: 20px; font-size: 1.2rem;">
+            "Aqueles que abrem mão da liberdade essencial por um pouco de segurança temporária não merecem nem liberdade nem segurança." — Benjamin Franklin
+        </p>
+        </div>
+    </section>
+
+    <!-- Enumeração -->
+    <section class="has-background-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo, alinhado à esquerda -->
+                <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                    Enumeração
+                </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    Envolve a tentativa de obter detalhes sobre as vulnerabilidades. É essencial que o pentester (testador de
+                    penetração) tenha conhecimento aprofundado dos serviços específicos que está
+                    analisando, caso contrario será difícil explorar as vulnerabilidades de maneira eficaz.
+                </p>
+                <h3 class="title my-4 has-text-grey-dark">O que ele busca?</h3>
+                <div class="ml-6">
+
+                    <ol type="1" class="has-text-grey-dark has-text-left">
+                        <li>Nomes de máquinas</li>
+                        <li>Nomes de usuários</li>
+                        <li>Serviços e suas versões</li>
+                        <li>Compartilhamento</li>
+                        <li>Drives</li>
+                        <li>Outros</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principios de Enumeração -->
+    <section class="has-background-info-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo, alinhado à esquerda -->
+                <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                    Principios de Enumeração
+                </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    É preciso obter informações através de reconhecimento e varreduras para, então,
+                    iniciar a fase do teste de enumeração.
+                </p>
+                <div class="container is-fluid p-4">
+                    <code>
+                    nmap -T4 -sS -sV [endereço de IP].
+                    </code>
+                </div>
+                  
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                    Espera-se encontrar uma lista com porta, serviço e programa.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enumeração NetBIOS com Nbtscan -->
+    <section class="has-background-success-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+                <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                    Enumeração NetBIOS com Nbtscan
+                </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    Para escanear redes baseadas em Windows através de uma varredura detalhada de um ip.
+                </p>
+                <div class="container is-fluid p-4">
+                    <code>
+                        nbtscan –v [endereço IP]
+                    </code>
+                </div>
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                    Espera-se encontrar o nome NetBIOS, o IP associado, grupo de trabalho e lista de serviços ativos.
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- Enumeração NetBIOS com Nbtscan 2 -->
+    <section class="has-background-success-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+                <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                    Enumeração NetBIOS com Nbtscan
+                </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    Para escanear um endereço IP em busca de portas e serviços UDP podemos usar:.
+                </p>
+                <p>Ou para uma varredura de serviços UDP</p>
+                <div class="container is-fluid p-4">
+                    <code>
+                        nmap -T4 -sU -sV [endereço de IP]
+                    </code>
+                </div>
+                  
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                    Espera-se encontrar portas UDP abertas, serviços ativos, potenciais vulnerabilidades.
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- Enumeração SNMP com Snmpcheck -->
+    <section class="has-background-warning-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+            <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                Enumeração SNMP com Snmpcheck
+            </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                O SNMP é um protocolo para fornecer uma maneira eficiente de monitorar e gerenciar dispositivos de rede.
+                Tendo isso em vista é evidente a quantidade de informações que espera-se obter.
+                </p>
+                <div class="container is-fluid p-4">
+                    <code>
+                        snmpcheck-1.8.pl -t [endereço de IP]
+                    </code>
+                </div>
+                    
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                    Espera-se encontrar uma enumeração de informações do dispositivo observado, como informações de sistema (nome, versão, uptime), informações de rede (IP, tabelas de roteamento, interfaces de rede) e em alguns casos usuários e grupos configurados no dispositivo.
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- Detecção de Versões: -->
+    <section class="has-background-link-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+            <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                Detecção de Versões
+            </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    A detecção de versões em sistemas e serviços é crítica por várias razões, especialmente em termos de segurança da rede, gestão de vulnerabilidades e compatibilidade de sistemas:
+                </p>
+                <ol type="1" class="py-2 px-6">
+                    <li><strong class="has-text-dark">Identificação de vulnerabilidades conhecidas</strong> - Cada versão de um software, serviço ou sistema pode ter vulnerabilidades específicas que foram descobertas e publicadas ao longo do tempo</li>
+                    <li><strong class="has-text-dark">Aproveitamento de exploits direcionados</strong> - Software que se utilizado em uma determinada versão do software consegue explorar alguma vulnerabilidade.</li>
+                </ol>
+                <div class="container is-fluid p-4">
+                    <code>
+                        telnet [endereço de IP] [porta]
+                    </code>
+                </div>
+                    
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                    Espera-se encontrar uma versão do servidor, módulo SSL e PHP.
+                </div>
+            </div>
+        </div>
+    </section>  
+    <!-- Detecção de Versões2 -->
+    <section class="has-background-link-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+            <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                Detecção de Versões
+            </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    Outra forma de obter resultados semelhante é:
+                </p>
+                <div class="container is-fluid p-4">
+                    <code>
+                        nc -v [endereço de IP] [porta].
+                    </code>
+                </div>
+                <div>
+                    O qual é possível encontrar servidores FTP.
+                </div>
+            </div>
+        </div>
+    </section>  
+
+    <!-- Detectando Servidores Web com Httprint -->
+    <section class="has-background-grey-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+            <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                Detectando Servidores Web com Httprint
+            </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    Para identificar o tipo de servidor web rodando em um host específico e retornar um relatório HTML:
+                </p>
+                <div class="container is-fluid p-4">
+                    <code>
+                        /httprint -h 192.168.32.128 -s signatures.txt -o saida.html
+                    </code>
+                </div>
+                <p>O comando espera obter um fingerprinting com base nas respostas HTTP do servidor comparando-as com padrões conhecidos.</p>
+                    
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                        Espera-se encontrar a versão do servidor web tipificado, uma probabilidade de identificação do servidor e assinaturas correspondentes (servidores que deram respostas parecidas).
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- A Ferramenta AMAP -->
+    <section class="has-background-primary-light" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+            <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                A Ferramenta AMAP
+            </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    Para identificar aplicações que estão sendo executadas em portas diferentes das usuais 
+                </p>
+                <div class="container is-fluid p-4">
+                    <code>
+                        amap -b [endereço IP] [porta]
+                    </code>
+                </div>
+                <p>Isso é interessante quando por exemplo temos um servidor Apache na porta 4001 quando se espera que esteja na 80.</p>
+                    
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                        Espera-se encontrar nome do serviço, versão e sistema.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enumeração SMTP -->
+    <section class="has-background-info" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+            <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                Enumeração SMTP
+            </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    Para identificar contas em nível de usuário em servidores SMTP.
+                </p>
+                <div class="container is-fluid p-4">
+                    <code>
+                        smtp-user-enum.pl -M VRFY -U /root/contas.txt -t [endereço de IP]
+                    </code>
+                </div>
+                <p>Muitos servidores SMTP modernos podem ter o comando VRFY desativado ou filtrado para evitar a enumeração de usuários e reduzir a exposição a ataques.</p>
+                    
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                        Espera-se encontrar lista de nomes de usuários.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- A Ferramenta SMTPScan -->
+    <section class="has-background-warning" style="height: 100vh;">
+        <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+
+            <!-- Título no topo -->
+            <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                A Ferramenta SMTPScan
+            </h1>
+
+            <!-- Parágrafo abaixo do título -->
+            <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+                <p >
+                    Para identificar e enumerar possíveis serviços e informações relacionadas ao protocolo SMTP alvo.
+                </p>
+                <div class="container is-fluid p-4">
+                    <code>
+                        smtpscan [endereço de IP]
+                    </code>
+                </div>                    
+                <h3 class="title my-4 has-text-grey-dark">O que iremos encontrar?</h3>
+                <div class="ml-6">
+                        Espera-se status das portas, informações dos banners e até comandos suportados.
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CAPA -->
+    <section class="has-background-success p-5" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100vh;">
+        <div class="container is-fullhd" style="position: relative; height: 100%; padding-top: 10vh; padding-bottom: 0;">
+    
+        <!-- Título com a maior fonte possível, mais acima -->
+        <h1 class="title has-text-black-ter" style="font-size: 6rem; text-align: center; margin-bottom: 2rem;">
+            Muito obrigado!
+        </h1>
+        <!-- Profile -->
+        <div class="profile-container">
+            <!-- Primeiro perfil -->
+            <div class="profile">
+              <img src="https://via.placeholder.com/100" alt="Perfil 1">
+              <h2 class="text-xl font-semibold">Edenilson Gomes</h2>
+              <a href="https://github.com/edengomes" target="_blank">https://github.com/edengomes</a>
+              <a href="mailto:edenilson.gomes@ufrpe.br">edenilson.gomes@ufrpe.br</a>
+            </div>
+            
+            <!-- Segundo perfil -->
+            <div class="profile">
+              <img src="https://avatars.githubusercontent.com/u/11728995?s=400&u=a9027ff13c2ba390c53815d04a550b1295294c9c&v=4" alt="Perfil 2">
+              <h2 class="text-xl font-semibold">Emanoel Rainey</h2>
+              <a href="https://github.com/edengomes" target="_blank">https://github.com/eraineycm8</a>
+              <a href="mailto:eraineycm8@gmail.com">eraineycm8@gmail.com</a>
+            </div>
+          </div>
+    
+        <!-- Citação no canto inferior direito -->
+        <p class="has-text-primary-invert" style="position: absolute; bottom: 20px; right: 20px; font-size: 1.2rem;">
+            "Aqueles que abrem mão da liberdade essencial por um pouco de segurança temporária não merecem nem liberdade nem segurança." — Benjamin Franklin
+        </p>
+        </div>
+    </section>
+
+
+
+    <!-- Segunda seção -->
+    <section class="has-background-warning">
+        <div class="container">
+            <h1 class="title has-text-black">Seção 2</h1>
+            <p class="subtitle has-text-black">Esta é a segunda seção com um fundo amarelo e um vídeo embutido.</p>
+            
+            <!-- Vídeo embutido do YouTube -->
+            <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/cPjZTqfkHbc?start=90" 
+                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+            </iframe>
+            </div>
+        </div>
+    </section>
+  
+
+  <!-- Terceira seção -->
+  <section class="has-background-danger">
+    <div class="container">
+      <h1 class="title has-text-white">Seção 3</h1>
+      <p class="subtitle has-text-white">Esta é a terceira seção com um fundo vermelho.</p>
+    </div>
+  </section>
+
+  <!-- Quarta seção -->
+  <section class="has-background-success">
+    <div class="container">
+      <h1 class="title has-text-white">Seção 4</h1>
+      <p class="subtitle has-text-white">Esta é a quarta seção com um fundo verde.</p>
+    </div>
+  </section>
+
+</body>
+</html>
