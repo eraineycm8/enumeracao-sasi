@@ -1,65 +1,80 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Enumeração - BACKTRACK LINUX</title>
-  <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-  <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      scroll-snap-type: y mandatory; /* Scroll snap para o eixo Y (vertical) */
-      overflow-y: scroll; /* Habilita a rolagem vertical */
-      scroll-behavior: smooth; /* Faz a rolagem ser suave */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enumeração - BACKTRACK LINUX</title>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <style>
+        html, body {
+        height: 100%;
+        margin: 0;
+        scroll-snap-type: y mandatory; /* Scroll snap para o eixo Y (vertical) */
+        overflow-y: scroll; /* Habilita a rolagem vertical */
+        scroll-behavior: smooth; /* Faz a rolagem ser suave */
+        }
 
-    section {
-      height: 100vh; /* Cada seção ocupa a altura total da janela */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      scroll-snap-align: start; /* Encaixa a seção no início da rolagem */
-    }
+        section {
+        height: 100vh; /* Cada seção ocupa a altura total da janela */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        scroll-snap-align: start; /* Encaixa a seção no início da rolagem */
+        }
 
-    .container {
-      text-align: center;
-    }
-  </style>
-   <style>
+        .container {
+        text-align: center;
+        }
+    </style>
+    <style>
     .profile-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
     }
     .profile {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 1rem;
-      width: 45%; /* Ajusta o tamanho das divs dos perfis */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1rem;
+        width: 45%; /* Ajusta o tamanho das divs dos perfis */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
     .profile img {
-      border-radius: 50%;
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
     }
     .profile a {
-      color: #1d4ed8; /* Cor azul para links */
-      text-decoration: none;
+        color: #1d4ed8; /* Cor azul para links */
+        text-decoration: none;
     }
     .profile a:hover {
-      text-decoration: underline;
+        text-decoration: underline;
     }
-  </style>
+    </style>
+    <style>
+        .image-container img {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.05); /* Efeito de zoom ao passar o mouse */
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 100vh;
+        }
+    </style>
 </head>
 <body>
 
@@ -126,7 +141,7 @@
         </div>
     </section>
 
-    <!-- Principios de Enumeração -->
+    <!-- Principios de Enumeração2 -->
     <section class="has-background-info-light" style="height: 100vh;">
         <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
 
@@ -154,6 +169,40 @@
             </div>
         </div>
     </section>
+        <!-- Principios de Enumeração -->
+        <section class="has-background-info-light" style="height: 100vh;">
+            <div class="container mt-6 pt-6" style="display: flex; flex-direction: column; justify-content: flex-start; height: 100%;">
+    
+                <!-- Título no topo, alinhado à esquerda -->
+                    <h1 class="title has-text-left has-text-black" style="font-size: 3rem;">
+                        Principios de Enumeração 
+                    </h1>
+    
+                <!-- Parágrafo abaixo do título -->
+                <div class="subtitle has-text-left has-text-grey-dark mt-6" style="font-size: 1.5rem;">
+
+                      
+                    <h3 class="title my-4 has-text-grey-dark">O que encontramos?</h3>
+                    <!-- Div que contém a imagem inicial -->
+                    <div class="image-container">
+                        <img src="./img/1-nmap.png" alt="Imagem" id="thumbnail" class="image is-128x128">
+                    </div>
+
+                    <!-- Modal Bulma que será exibido ao clicar na imagem -->
+                    <div class="modal" id="imageModal">
+                        <div class="modal-background"></div>
+                        <div class="modal-content">
+                        <!-- Imagem dentro do modal -->
+                        <img src="./img/1-nmap.png" alt="Imagem em tamanho real">
+                        </div>
+                        <!-- Botão para fechar o modal -->
+                        <button class="modal-close is-large" aria-label="close" id="closeModal"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 
     <!-- Enumeração NetBIOS com Nbtscan -->
     <section class="has-background-success-light" style="height: 100vh;">
@@ -479,6 +528,28 @@
       <p class="subtitle has-text-white">Esta é a quarta seção com um fundo verde.</p>
     </div>
   </section>
+
+  <script>
+    // Seleciona os elementos
+    var modal = document.getElementById("imageModal");
+    var thumbnail = document.getElementById("thumbnail");
+    var closeModal = document.getElementById("closeModal");
+
+    // Abre o modal ao clicar na imagem
+    thumbnail.onclick = function() {
+      modal.classList.add("is-active"); // Adiciona a classe Bulma que ativa o modal
+    }
+
+    // Fecha o modal ao clicar no botão de fechar
+    closeModal.onclick = function() {
+      modal.classList.remove("is-active"); // Remove a classe que fecha o modal
+    }
+
+    // Fecha o modal ao clicar fora da imagem
+    document.querySelector('.modal-background').onclick = function() {
+      modal.classList.remove("is-active");
+    }
+  </script>
 
 </body>
 </html>
